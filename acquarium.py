@@ -4,7 +4,7 @@ import time
 import math
 import sys
 import os
-
+#commento inutile
 school_directions = {}
 CONFIG_FILE = "config.json"
 
