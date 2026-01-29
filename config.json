@@ -1,0 +1,353 @@
+{
+  "species": [
+    {
+      "name": "smallfish",
+      "shape": [
+        ["><>"]
+      ],
+      "speed": 0.6,
+      "role": "prey",
+      "max_population": 60,
+      "rgb_fg": [159, 194, 225],
+      "flip_allowed": true,
+      "schooling": {
+        "neighbor_radius_x": 45,
+        "neighbor_radius_y": 6,
+        "min_dx": 6.0,
+  "sep_force_x": 0.18,
+
+  "min_dy": 2.0,
+  "sep_force_y": 0.06,
+        "alignment_chance": 0.25,
+        "cohesion": 0.03,
+        "jitter": 0.05,
+        "wave_strength": 0.25,
+        "lane_lock": true,
+        "max_school_size": 5,
+        "max_schools": 18
+      }
+    },
+    {
+      "name": "mediumfish",
+      "shape": [
+        ["><^>>"]
+      ],
+      "speed": 0.3,
+      "role": "prey",
+      "max_population": 15,
+      "rgb_fg": [236, 160, 84],
+      "flip_allowed": true,
+      "schooling": {
+        "neighbor_radius_x": 60,
+        "neighbor_radius_y": 10,
+        "alignment_chance": 0.12,
+        "cohesion": 0.015,
+        "jitter": 0.02,
+        "wave_strength": 0.1,
+        "lane_lock": false,
+        "max_school_size": 5,
+        "max_schools": 3
+      }
+    },
+    {
+      "name": "roundfish",
+      "shape": [
+        [">=(o)>"]
+      ],
+      "speed": 0.4,
+      "role": "prey",
+      "max_population": 10,
+      "rgb_fg": [36, 232, 75],
+      "flip_allowed": true,
+      "schooling": {
+        "neighbor_radius_x": 30,
+        "neighbor_radius_y": 8,
+        "alignment_chance": 0.18,
+        "cohesion": 0.02,
+        "jitter": 0.04,
+        "wave_strength": 0.18,
+        "lane_lock": true,
+        "max_school_size": 5,
+        "max_schools": 18
+      }
+    },
+    {
+      "name": "bigfish",
+      "shape": [
+        ["><(((o>"]
+      ],
+      "speed": 0.3,
+      "role": "predator",
+      "max_population": 3,
+      "rgb_fg": [166, 75, 52],
+      "flip_allowed": true,
+      "schooling": {
+        "neighbor_radius_x": 90,
+        "neighbor_radius_y": 14,
+        "alignment_chance": 0.05,
+        "cohesion": 0.005,
+        "jitter": 0.01,
+        "wave_strength": 0.05,
+        "lane_lock": false
+      }
+    },
+    {
+      "name": "crab",
+      "shape": [
+        [" (\\_/) "]
+      ],
+      "speed": 0.1,
+      "role": "bottom",
+      "max_population": 2,
+      "rgb_fg": [255, 80, 80],
+      "flip_allowed": false,
+      "preferred_depth": "bottom",
+      "vertical_bias": 0.25
+    },
+    {
+      "name": "jelly",
+      "shape_frames": [
+        [
+          " ____ ",
+          "(____)",
+          " |  | ",
+          " |  | "
+        ],
+        [
+          " ____ ",
+          "(____)",
+          " ||  |",
+          " ||  |"
+        ],
+        [
+          " ____ ",
+          "(____)",
+          " | || ",
+          " | || "
+        ],
+        [
+          " ____ ",
+          "(____)",
+          " |||| ",
+          " |||| "
+        ],
+        [
+          " ____ ",
+          "(____)",
+          " |  | ",
+          " || | "
+        ],
+        [
+          " ____ ",
+          "(____)",
+          " |  | ",
+          " |  | "
+        ]
+      ],
+      "animation_speed": 0.25,
+      "speed": 0.3,
+      "role": "float",
+      "max_population": 6,
+      "rgb_fg": [255, 0, 200],
+      "flip_allowed": false
+    }
+  ],
+
+  "static_objects": [
+  {
+    "type": "static",
+    "shape": [
+      "   |   ",
+      "  /|   ",
+      "  | |  ",
+      "  \\|/  ",
+      "   |   ",
+      "  / \\  "
+    ],
+    "y_offset_from_bottom": 1,
+    "random_x": true,
+    "count": 4,
+    "rgb_fg": [20, 120, 40]
+  },
+  {
+    "type": "static",
+    "shape": [
+      "   |   ",
+      "   |\\  ",
+      "   | \\ ",
+      "   | | ",
+      "   |/  ",
+      "   |   ",
+      "  / \\  "
+    ],
+    "y_offset_from_bottom": 1,
+    "random_x": true,
+    "count": 3,
+    "rgb_fg": [30, 150, 60]
+  },
+  {
+    "type": "static",
+    "shape": [
+      "   |   ",
+      "  / \\  ",
+      "  | |  ",
+      " /   \\ ",
+      "  | |  ",
+      "  \\|/  "
+    ],
+    "y_offset_from_bottom": 1,
+    "random_x": true,
+    "count": 3,
+    "rgb_fg": [50, 170, 90]
+  },
+  {
+    "type": "static",
+    "shape": [
+      "   |   ",
+      "   |   ",
+      "  /|\\  ",
+      "  | |  ",
+      "  | |  ",
+      "  \\|/  ",
+      "   |   "
+    ],
+    "y_offset_from_bottom": 1,
+    "random_x": true,
+    "count": 2,
+    "rgb_fg": [25, 140, 50]
+  },
+  {
+    "type": "static",
+    "shape": [
+      "   |   ",
+      "   |   ",
+      "   |\\  ",
+      "   | | ",
+      "  / |  ",
+      "  | |  ",
+      "   |/  ",
+      "   |   "
+    ],
+    "y_offset_from_bottom": 1,
+    "random_x": true,
+    "count": 2,
+    "rgb_fg": [40, 180, 80]
+  },
+  {
+    "type": "static",
+    "shape": [
+      "   |   ",
+      "  \\|/  ",
+      "   |   ",
+      "  / \\  ",
+      "  | |  "
+    ],
+    "y_offset_from_bottom": 1,
+    "random_x": true,
+    "count": 2,
+    "rgb_fg": [60, 200, 100]
+  },
+  {
+    "type": "static",
+    "shape": [
+      "  \\|/  ",
+      " --*-- ",
+      "   |   "
+    ],
+    "y_offset_from_bottom": 1,
+    "random_x": true,
+    "count": 2,
+    "rgb_fg": [255, 105, 180]
+  },
+  {
+    "type": "static",
+    "shape": [
+      ">▄@"
+    ],
+    "y_offset_from_bottom": 1,
+    "random_x": true,
+    "count": 1,
+    "rgb_fg": [200, 100, 220]
+  },
+  {
+    "type": "static",
+    "shape": [
+      ">▄@"
+    ],
+    "y_offset_from_bottom": 1,
+    "random_x": true,
+    "count": 1,
+    "rgb_fg": [187, 218, 133]
+  },
+  {
+    "type": "static",
+    "shape": [
+      "╔═══╗",
+      "╠═±═╣",
+      "╚═══╝"
+    ],
+    "y_offset_from_bottom": 1,
+    "random_x": true,
+    "count": 1,
+    "rgb_fg": [153, 153, 0]
+  },
+  {
+    "type": "static",
+    "shape": [
+      "   |   ",
+      "  /|\\  ",
+      "  /|\\  ",
+      "   |   "
+    ],
+    "y_offset_from_bottom": 1,
+    "random_x": true,
+    "count": 3,
+    "rgb_fg": [255, 180, 220]
+  },
+  {
+    "type": "static",
+    "shape": [
+      "  ___  ",
+      " /   \\ ",
+      "|_____|"
+    ],
+    "y_offset_from_bottom": 1,
+    "random_x": true,
+    "count": 1,
+    "rgb_fg": [127, 131, 134]
+  },
+  {
+    "type": "static",
+    "shape": [
+      " _ ",
+      "( )",
+      "(_)"
+    ],
+    "y_offset_from_bottom": 1,
+    "random_x": true,
+    "count": 2,
+    "rgb_fg": [255, 204, 255]
+  },
+  {
+    "type": "static",
+    "shape": [
+      " ^^^^^^^",
+      " \\ \\ / /",
+      "  >   < ",
+      " /   ° \\ ",
+      "|   ^   |",
+      "|  | |  |",
+      " -------"
+    ],
+    "y_offset_from_bottom": 1,
+    "random_x": true,
+    "count": 1,
+    "rgb_fg": [173, 132, 52]
+  }
+],
+
+  "bubbles": {
+    "count": 35,
+    "rgb_fg": [204, 255, 255]
+  }
+}
