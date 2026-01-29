@@ -748,12 +748,11 @@ def main():
 if __name__ == "__main__":
     try:
         if os.name == "nt":
-            os.system("powershell -command \"Add-Type -AssemblyName System.Windows.Forms; "
-                      "[System.Windows.Forms.SendKeys]::SendWait('%{ENTER}')\"")
+            # Evita SendKeys, che può causare problemi
+            os.system("")  # solo abilita ANSI
         else:
             sys.stdout.write("\033[8;200;120t")
             sys.stdout.flush()
-    except:
-        pass
-    os.system("")
+    except Exception as e:
+        print("Errore durante l'inizializzazione:", e)
     main()
