@@ -1,10 +1,23 @@
 {
   "species": [
     {
-      "name": "smallfish",
+      "name":"submarine",
       "shape": [
-        ["><>"]
+        "        ___       ",
+        "    ____| |_____  ",
+        "   /            \\ ",
+        "╠═(   O     O    )",
+        "   \\____________/ "
       ],
+      "speed": 0.02,
+      "max_population": 1,
+      "rgb_fg": [255, 105, 180],
+      "flip_allowed": true,
+      "role": "predator"
+    },
+    {
+      "name": "smallfish",
+      "shape": [["><>"]],
       "speed": 0.6,
       "role": "prey",
       "max_population": 60,
@@ -14,10 +27,9 @@
         "neighbor_radius_x": 45,
         "neighbor_radius_y": 6,
         "min_dx": 6.0,
-  "sep_force_x": 0.18,
-
-  "min_dy": 2.0,
-  "sep_force_y": 0.06,
+        "sep_force_x": 0.18,
+        "min_dy": 2.0,
+        "sep_force_y": 0.06,
         "alignment_chance": 0.25,
         "cohesion": 0.03,
         "jitter": 0.05,
@@ -29,9 +41,7 @@
     },
     {
       "name": "mediumfish",
-      "shape": [
-        ["><^>>"]
-      ],
+      "shape": [["><^>>"]],
       "speed": 0.3,
       "role": "prey",
       "max_population": 15,
@@ -51,9 +61,7 @@
     },
     {
       "name": "roundfish",
-      "shape": [
-        [">=(o)>"]
-      ],
+      "shape": [["=(o)>"]],
       "speed": 0.4,
       "role": "prey",
       "max_population": 10,
@@ -73,9 +81,7 @@
     },
     {
       "name": "bigfish",
-      "shape": [
-        ["><(((o>"]
-      ],
+      "shape": [[">(((o>"]],
       "speed": 0.3,
       "role": "predator",
       "max_population": 3,
@@ -93,9 +99,7 @@
     },
     {
       "name": "crab",
-      "shape": [
-        [" (\\_/) "]
-      ],
+      "shape": [[" (\\_/) "]],
       "speed": 0.1,
       "role": "bottom",
       "max_population": 2,
@@ -108,37 +112,12 @@
       "name_specie": "jelly",
       "name": "jellySmall",
       "shape_frames": [
-  [
-    " ___ ",
-    "(___)",
-    " | | ",
-    " |  "
-  ],
-  [
-    "  __ ",
-    " (__) ",
-    "  | | ",
-    "  | | "
-  ],
-  [
-    "   _  ",
-    "  /_\\ ",
-    "   || ",
-    "   || "
-  ],
-  [
-    "   _  ",
-    "  /_\\ ",
-    "   || ",
-    "   || "
-  ],
-  [
-    "  __  ",
-    " (__) ",
-    "  | | ",
-    "    | "
-  ]
-    ],
+        [" ___ ", "(___)", " | | ", " |  "],
+        ["  __ ", " (__) ", "  | | ", "  | | "],
+        ["   _  ", "  /_\\ ", "   || ", "   || "],
+        ["   _  ", "  /_\\ ", "   || ", "   || "],
+        ["  __  ", " (__) ", "  | | ", "    | "]
+      ],
       "animation_speed": 0.18,
       "speed": 0.3,
       "role": "float",
@@ -146,58 +125,27 @@
       "rgb_fg": [0, 71, 171],
       "flip_allowed": false,
       "movement": {
-    "drift_down": 0.05,
-    "push_up": 0.15,
-    "drag": 1.5,
-    "max_up": -0.25,
-    "max_down": 0.005,
-
-    "contract_chance_base": 0.0006,
-    "contract_chance_depth": 0.005,
-    "contract_duration_min": 0.10,
-    "contract_duration_max": 0.20
-  }
+        "drift_down": 0.05,
+        "push_up": 0.15,
+        "drag": 1.5,
+        "max_up": -0.25,
+        "max_down": 0.005,
+        "contract_chance_base": 0.0006,
+        "contract_chance_depth": 0.005,
+        "contract_duration_min": 0.10,
+        "contract_duration_max": 0.20
+      }
     },
     {
       "name_specie": "jelly",
       "name": "jellyBig",
       "shape_frames": [
-        [
-          " ____ ",
-          "(____)",
-          " |  | ",
-          "|  | "
-        ],
-        [
-          " /\\ ",
-          "/__\\",
-          " ||",
-          " ||"
-        ],
-        [
-          " ____ ",
-          "(____)",
-          " |||| ",
-          " |||| "
-        ],
-        [
-          " ____ ",
-          "(____)",
-          " |||| ",
-          "  ||  "
-        ],
-        [
-          " ____ ",
-          "(____)",
-          " |  | ",
-          " |  | "
-        ],
-        [
-          " ____ ",
-          "(____)",
-          " |  | ",
-          "  |  | "
-        ]
+        [" ____ ", "(____)", " |  | ", "|  | "],
+        [" /\\ ", "/__\\", " ||", " ||"],
+        [" ____ ", "(____)", " |||| ", " |||| "],
+        [" ____ ", "(____)", " |||| ", "  ||  "],
+        [" ____ ", "(____)", " |  | ", " |  | "],
+        [" ____ ", "(____)", " |  | ", "  |  | "]
       ],
       "animation_speed": 0.18,
       "speed": 0.3,
@@ -206,213 +154,132 @@
       "rgb_fg": [255, 0, 200],
       "flip_allowed": false,
       "movement": {
-    "drift_down": 0.00005,
-    "push_up": 0.15,
-    "drag": 1.5,
-    "max_up": -0.15,
-    "max_down": 0.05,
-
-    "contract_chance_base": 0.006,
-    "contract_chance_depth": 0.01,
-    "contract_duration_min": 0.18,
-    "contract_duration_max": 0.32
-  }
+        "drift_down": 0.00005,
+        "push_up": 0.15,
+        "drag": 1.5,
+        "max_up": -0.15,
+        "max_down": 0.05,
+        "contract_chance_base": 0.006,
+        "contract_chance_depth": 0.01,
+        "contract_duration_min": 0.18,
+        "contract_duration_max": 0.32
+      }
     }
   ],
-
   "static_objects": [
-  {
-    "type": "static",
-    "shape": [
-      "   |   ",
-      "  /|   ",
-      "  | |  ",
-      "  \\|/  ",
-      "   |   ",
-      "  / \\  "
-    ],
-    "y_offset_from_bottom": 1,
-    "random_x": true,
-    "count": 4,
-    "rgb_fg": [20, 120, 40]
-  },
-  {
-    "type": "static",
-    "shape": [
-      "   |   ",
-      "   |\\  ",
-      "   | \\ ",
-      "   | | ",
-      "   |/  ",
-      "   |   ",
-      "  / \\  "
-    ],
-    "y_offset_from_bottom": 1,
-    "random_x": true,
-    "count": 3,
-    "rgb_fg": [30, 150, 60]
-  },
-  {
-    "type": "static",
-    "shape": [
-      "   |   ",
-      "  / \\  ",
-      "  | |  ",
-      " /   \\ ",
-      "  | |  ",
-      "  \\|/  "
-    ],
-    "y_offset_from_bottom": 1,
-    "random_x": true,
-    "count": 3,
-    "rgb_fg": [50, 170, 90]
-  },
-  {
-    "type": "static",
-    "shape": [
-      "   |   ",
-      "   |   ",
-      "  /|\\  ",
-      "  | |  ",
-      "  | |  ",
-      "  \\|/  ",
-      "   |   "
-    ],
-    "y_offset_from_bottom": 1,
-    "random_x": true,
-    "count": 2,
-    "rgb_fg": [25, 140, 50]
-  },
-  {
-    "type": "static",
-    "shape": [
-      "   |   ",
-      "   |   ",
-      "   |\\  ",
-      "   | | ",
-      "  / |  ",
-      "  | |  ",
-      "   |/  ",
-      "   |   "
-    ],
-    "y_offset_from_bottom": 1,
-    "random_x": true,
-    "count": 2,
-    "rgb_fg": [40, 180, 80]
-  },
-  {
-    "type": "static",
-    "shape": [
-      "   |   ",
-      "  \\|/  ",
-      "   |   ",
-      "  / \\  ",
-      "  | |  "
-    ],
-    "y_offset_from_bottom": 1,
-    "random_x": true,
-    "count": 2,
-    "rgb_fg": [60, 200, 100]
-  },
-  {
-    "type": "static",
-    "shape": [
-      "  \\|/  ",
-      " --*-- ",
-      "   |   "
-    ],
-    "y_offset_from_bottom": 1,
-    "random_x": true,
-    "count": 2,
-    "rgb_fg": [255, 105, 180]
-  },
-  {
-    "type": "static",
-    "shape": [
-      ">▄@"
-    ],
-    "y_offset_from_bottom": 1,
-    "random_x": true,
-    "count": 1,
-    "rgb_fg": [200, 100, 220]
-  },
-  {
-    "type": "static",
-    "shape": [
-      ">▄@"
-    ],
-    "y_offset_from_bottom": 1,
-    "random_x": true,
-    "count": 1,
-    "rgb_fg": [187, 218, 133]
-  },
-  {
-    "type": "static",
-    "shape": [
-      "╔═══╗",
-      "╠═±═╣",
-      "╚═══╝"
-    ],
-    "y_offset_from_bottom": 1,
-    "random_x": true,
-    "count": 1,
-    "rgb_fg": [153, 153, 0]
-  },
-  {
-    "type": "static",
-    "shape": [
-      "   |   ",
-      "  /|\\  ",
-      "  /|\\  ",
-      "   |   "
-    ],
-    "y_offset_from_bottom": 1,
-    "random_x": true,
-    "count": 3,
-    "rgb_fg": [255, 180, 220]
-  },
-  {
-    "type": "static",
-    "shape": [
-      "  ___  ",
-      " /   \\ ",
-      "|_____|"
-    ],
-    "y_offset_from_bottom": 1,
-    "random_x": true,
-    "count": 1,
-    "rgb_fg": [127, 131, 134]
-  },
-  {
-    "type": "static",
-    "shape": [
-      " _ ",
-      "( )",
-      "(_)"
-    ],
-    "y_offset_from_bottom": 1,
-    "random_x": true,
-    "count": 2,
-    "rgb_fg": [255, 204, 255]
-  },
-  {
-    "type": "static",
-    "shape": [
-      " ^^^^^^^",
-      " \\ \\ / /",
-      "  >   < ",
-      " /   ° \\ ",
-      "|   ^   |",
-      "|  | |  |",
-      " -------"
-    ],
-    "y_offset_from_bottom": 1,
-    "random_x": true,
-    "count": 1,
-    "rgb_fg": [173, 132, 52]
-  }
-],
-
+    {
+      "type": "static",
+      "shape": ["   |   ", "  /|   ", "  | |  ", "  \\|/  ", "   |   ", "  / \\  "],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 4,
+      "rgb_fg": [20, 120, 40]
+    },
+    {
+      "type": "static",
+      "shape": ["   |   ", "   |\\  ", "   | \\ ", "   | | ", "   |/  ", "   |   ", "  / \\  "],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 3,
+      "rgb_fg": [30, 150, 60]
+    },
+    {
+      "type": "static",
+      "shape": ["   |   ", "  / \\  ", "  | |  ", " /   \\ ", "  | |  ", "  \\|/  "],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 3,
+      "rgb_fg": [50, 170, 90]
+    },
+    {
+      "type": "static",
+      "shape": ["   |   ", "   |   ", "  /|\\  ", "  | |  ", "  | |  ", "  \\|/  ", "   |   "],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 2,
+      "rgb_fg": [25, 140, 50]
+    },
+    {
+      "type": "static",
+      "shape": ["   |   ", "   |   ", "   |\\  ", "   | | ", "  / |  ", "  | |  ", "   |/  ", "   |   "],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 2,
+      "rgb_fg": [40, 180, 80]
+    },
+    {
+      "type": "static",
+      "shape": ["   |   ", "  \\|/  ", "   |   ", "  / \\  ", "  | |  "],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 2,
+      "rgb_fg": [60, 200, 100]
+    },
+    {
+      "type": "static",
+      "shape": ["  \\|/  ", " --*-- ", "   |   "],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 2,
+      "rgb_fg": [255, 105, 180]
+    },
+    {
+      "type": "static",
+      "shape": ["╔═══╗", "╠═±═╣", "╚═══╝"],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 1,
+      "rgb_fg": [153, 153, 0]
+    },
+    {
+      "type": "static",
+      "shape": ["   |   ", "  /|\\  ", "  /|\\  ", "   |   "],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 3,
+      "rgb_fg": [255, 180, 220]
+    },
+    {
+      "type": "static",
+      "shape": ["  ___  ", " /   \\ ", "|_____|"],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 1,
+      "rgb_fg": [127, 131, 134]
+    },
+    {
+      "type": "static",
+      "shape": [" _ ", "( )", "(-)"],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 2,
+      "rgb_fg": [255, 204, 255]
+    },
+    {
+      "type": "static",
+      "shape": [" ^^^^^^^", " \\ \\ / /", "  >   < ", " /   ° \\ ", "|   ^   |", "|  | |  |", " -------"],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 1,
+      "rgb_fg": [173, 132, 52]
+    },
+    {
+      "type": "static",
+      "shape": [">▄@"],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 1,
+      "rgb_fg": [200, 100, 220]
+    },
+    {
+      "type": "static",
+      "shape": [">▄@"],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 1,
+      "rgb_fg": [187, 218, 133]
+    }
+  ],
   "bubbles": {
     "count": 35,
     "rgb_fg": [204, 255, 255]
