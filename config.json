@@ -1,13 +1,14 @@
 {
   "species": [
     {
-      "name":"submarine",
+      "name_specie":"submarine",
+      "name":"sh",
       "shape": [
-        "        ___       ",
-        "    ____| |_____  ",
-        "   /            \\ ",
-        "╠═(   O     O    )",
-        "   \\____________/ "
+        "         _╔_             ",
+        "     ____|  \\__________  ",
+        "   _/                  \\ ",
+        "╠═(_   O   O   O   O    )",
+        "    \\__________________/ "
       ],
       "speed": 0.02,
       "max_population": 1,
@@ -20,7 +21,7 @@
       "shape": [["><>"]],
       "speed": 0.6,
       "role": "prey",
-      "max_population": 60,
+      "max_population": 40,
       "rgb_fg": [220, 51, 28],
       "flip_allowed": true,
       "schooling": {
@@ -40,11 +41,41 @@
       }
     },
     {
+      "name": "tetrafish",
+      "shape": [
+        " \\ ",
+        "\\/\\",
+        "/\\/",
+        " / "
+        ],
+      "speed": 0.3,
+      "role": "prey",
+      "max_population": 10,
+      "rgb_fg": [207, 181, 59],
+      "flip_allowed": true,
+      "schooling": {
+        "neighbor_radius_x": 45,
+        "neighbor_radius_y": 6,
+        "min_dx": 6.0,
+        "sep_force_x": 0.18,
+        "min_dy": 2.0,
+        "sep_force_y": 0.06,
+        "alignment_chance": 0.25,
+        "cohesion": 0.03,
+        "jitter": 0.05,
+        "wave_strength": 0.25,
+        "lane_lock": true,
+        "max_school_size": 3,
+        "max_schools": 2
+      }
+    },
+
+    {
       "name": "mediumfish",
       "shape": [["><^>>"]],
       "speed": 0.3,
       "role": "prey",
-      "max_population": 15,
+      "max_population": 12,
       "rgb_fg": [236, 160, 84],
       "flip_allowed": true,
       "schooling": {
@@ -64,7 +95,7 @@
       "shape": [["=(o)>"]],
       "speed": 0.4,
       "role": "prey",
-      "max_population": 10,
+      "max_population": 8,
       "rgb_fg": [36, 232, 75],
       "flip_allowed": true,
       "schooling": {
@@ -98,6 +129,21 @@
       }
     },
     {
+      "name": "shark",
+      "shape": [[
+        "      .      ",
+        "\\_____)\\_____",
+        "/--v____ __`<",
+        "        )/   ",
+        "        '    "
+        ]],
+      "speed": 0.3,
+      "role": "predator",
+      "max_population": 1,
+      "rgb_fg": [96, 124, 142],
+      "flip_allowed": true
+    },
+    {
       "name": "crab",
       "shape": [[" (\\_/) "]],
       "speed": 0.1,
@@ -121,7 +167,7 @@
       "animation_speed": 0.18,
       "speed": 0.3,
       "role": "float",
-      "max_population": 6,
+      "max_population": 3,
       "rgb_fg": [0, 71, 171],
       "flip_allowed": false,
       "movement": {
@@ -130,9 +176,9 @@
         "drag": 1.5,
         "max_up": -0.25,
         "max_down": 0.005,
-        "contract_chance_base": 0.0006,
+        "contract_chance_base": 0.003,
         "contract_chance_depth": 0.005,
-        "contract_duration_min": 0.10,
+        "contract_duration_min": 0.18,
         "contract_duration_max": 0.20
       }
     },
@@ -150,7 +196,7 @@
       "animation_speed": 0.18,
       "speed": 0.3,
       "role": "float",
-      "max_population": 6,
+      "max_population": 4,
       "rgb_fg": [255, 0, 200],
       "flip_allowed": false,
       "movement": {
@@ -166,7 +212,26 @@
       }
     }
   ],
+
+
+
+
   "static_objects": [
+    {
+     "type":"static",
+     "shape":[
+      "____________________________",
+      "(_( (_(_(_( (_(_(_(_( (_(_(_)",
+      "  / / \\ \\ / / \\ \\   / / \\ \\",
+      " / /   \\ / /   \\ \\/ /    \\ \\",
+      "| |     \\| |    | | |     | |",
+      "\\_\\     /\\_\\   /_/\\_\\    /_/"
+    ],
+     "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 1,
+      "rgb_fg": [242, 235, 227]
+    },
     {
       "type": "static",
       "shape": ["   |   ", "  /|   ", "  | |  ", "  \\|/  ", "   |   ", "  / \\  "],
