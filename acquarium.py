@@ -4,7 +4,7 @@ import time
 import math
 import sys
 import os
-#commento inutile
+
 school_directions = {}
 CONFIG_FILE = "config.json"
 
@@ -200,12 +200,13 @@ class Fish:
         self.visible_y = visible_y
         self.cfg = cfg
         self.school_cfg = self.cfg.get("schooling", {})
+        self.movement_cfg = self.cfg.get("movement", {})
         self.school_id = None
         self.reset()
 
     def reset(self):
         self.name = self.cfg["name"]
-
+        self.name_specie = self.cfg.get("name_specie", self.name)
 
         self.frames = self.cfg.get("shape_frames")
         self.animation_speed = self.cfg.get("animation_speed", 0.3)
@@ -277,7 +278,7 @@ class Fish:
             self.shape = self.base_frames[self.anim_index]
 
     def schooling(self, fish_list):
-        if self.preferred_depth == "bottom" or self.name == "jelly":
+        if self.preferred_depth == "bottom" or self.name_specie == "jelly":
             return
 
         NEIGHBOR_RADIUS_X = 35
@@ -375,53 +376,82 @@ class Fish:
         
         self.y = max(1, min(self.y, self.visible_y - self.height - 2))
 
-    def jellyfish_movement(self, dt, border_behavior="wrap"):
-        wander = self.cfg.get("vertical_wander", 0.05)
-        self.y += math.sin(time.time() * 1.2 + self.x * 0.1) * 0.03
-        self.y += random.uniform(-wander, wander)
+    
+    def jellyfish_movement(self, dt):
+        if not hasattr(self, "vy"):
+            self.vy = 0.0
+            self.contracting = False
+            self.contract_timer = 0.0
 
-        if random.random() < self.cfg.get("propulsion_chance", 0.02):
-            self.y -= random.uniform(0.8, 1.5)
+        m = self.movement_cfg
 
-        self.x += math.sin(time.time() * 0.8 + self.y * 0.2) * 0.05
+        DRIFT_DOWN = m.get("drift_down", 0.01)
+        PUSH_UP    = m.get("push_up", 0.35)
+        DRAG       = m.get("drag", 0.99)
 
-        if border_behavior == "wrap":
-            if self.y > self.visible_y - self.height - 5:
-                self.y -= 0.5
+        MAX_UP     = m.get("max_up", -0.35)
+        MAX_DOWN   = m.get("max_down", 0.2)
 
-            upper_limit = 2.5
-            if self.y < upper_limit:
-                
-                push = (upper_limit - self.y) * 0.3
-                self.y += push
+        BASE_CHANCE = m.get("contract_chance_base", 0.006)
+        DEPTH_GAIN  = m.get("contract_chance_depth", 0.005) 
+        DUR_MIN     = m.get("contract_duration_min", 0.18)
+        DUR_MAX     = m.get("contract_duration_max", 0.32)
 
-            
-            self.x %= max(1, self.max_x - self.width)
+        self.vy += DRIFT_DOWN * dt * 60
 
-        elif border_behavior == "bounce":
-            
-            if not hasattr(self, "_vx"):
-                self._vx = 0.05
-                self._vy = 0.02
+        depth = self.y / max(1, self.visible_y - self.height)
+        chance = BASE_CHANCE + depth * DEPTH_GAIN
 
-            self.x += self._vx
-            self.y += self._vy
+        if not self.contracting and random.random() < chance:
+            self.contracting = True
+            self.contract_timer = random.uniform(DUR_MIN, DUR_MAX)
 
-            
-            if self.x < 0:
-                self.x = 0
-                self._vx = abs(self._vx)
-            elif self.x > self.max_x - self.width:
-                self.x = self.max_x - self.width
-                self._vx = -abs(self._vx)
+        if self.contracting:
+            self.vy -= PUSH_UP * dt * 60
+            self.contract_timer -= dt
+            if self.contract_timer <= 0:
+                self.contracting = False
 
-            
-            if self.y < 2:  
-                self.y = 2
-                self._vy = abs(self._vy)  
-            elif self.y > self.visible_y - self.height:
-                self.y = self.visible_y - self.height
-                self._vy = -abs(self._vy)
+        self.vy *= DRAG
+        self.vy = max(MAX_UP, min(self.vy, MAX_DOWN))
+
+        center = (self.visible_y - self.height) * 0.5
+        dist = self.y - center
+        self.vy -= dist * abs(dist) * 0.00008 
+
+        top = 2
+        bottom = self.visible_y - self.height - 3
+
+        if self.y < top:
+            self.vy += (top - self.y) * 0.2 
+        if self.y > bottom:
+            self.vy -= (self.y - bottom) * 0.2 
+
+   
+        top = 2
+        bottom = self.visible_y - self.height - 3
+        if self.y < top + 3:
+            self.vy += 0.02
+        if self.y > bottom - 3:
+            self.vy -= 0.02
+
+      
+        self.y += self.vy * dt * 60
+
+      
+        frame_count = len(self.base_frames)
+        if self.contracting:
+            self.anim_index = min(frame_count - 1, self.anim_index + 1)
+        else:
+            self.anim_index = max(0, self.anim_index - 1)
+        self.shape = self.base_frames[self.anim_index]
+
+        
+        self.x += math.sin(time.time() * 0.4 + self.y) * 0.015
+
+      
+        self.x %= max(1, self.max_x - self.width)
+
 
     def update(self, dt, fish_list):
         self.age += dt
@@ -433,7 +463,7 @@ class Fish:
 
         self.animate(dt)
 
-        if self.name == "jelly":
+        if self.name_specie == "jelly":
             self.jellyfish_movement(dt)
         else:
             self.schooling(fish_list)
@@ -556,7 +586,7 @@ def sweep_bottom(renderer, static_layer, visible_y, visible_x):
         for x in range(visible_x):
             ch, fg_code, bg_code = static_layer[y][x]
             if ch in [" ", "_", "_-", ":-", "-", "~", "^", "`"]:
-                # Simula update della cella
+                
                 renderer.front[y][x] = ("","","")
                 renderer.set_cell(y, x, ch, fg_code, bg_code)
                 
@@ -580,12 +610,12 @@ def main():
 
     renderer = Renderer(visible_y, visible_x)
 
-    # --- COSTRUZIONE STATIC_LAYER ---
+    
     static_layer = [[(" ", "", "") for _ in range(visible_x)] for _ in range(visible_y)]
     static_objects = []
     occupied = []
 
-    # 1) Posizionamento oggetti statici come prima
+   
     for obj in config["static_objects"]:
         shape = obj["shape"]
         h = len(shape)
@@ -615,19 +645,18 @@ def main():
             static_objects.append(so)
             so.draw_on_layer(static_layer)
 
-    # 2) Riempimento sabbia negli spazi liberi
+    
     rgb_sand = config.get("rgb_sand", [194, 178, 128])
     sand_chars = [",", ".", ":", "_", "-", "`", "~"]
 
     for y in range(max(0, visible_y - 2), visible_y):
         for x in range(visible_x):
-            # Disegni la sabbia solo se la cella è vuota
+            
             if static_layer[y][x] == ("", "", "") or static_layer[y][x][0] == " ":
                 ch = random.choice(sand_chars)
                 fg_code = fg(*rgb_sand)
                 static_layer[y][x] = (ch, fg_code, "")
 
-    # 3) Ora tutto il layer è pronto: disegna subito prima del loop
     #renderer.clear_back()
     renderer.blit_static_layer(static_layer)
     renderer.flush(force=True)
@@ -673,8 +702,6 @@ def main():
       
     bubble_intro(renderer, static_layer, visible_y, visible_x,timesleep=0)
     renderer.blit_static_layer(static_layer) 
-    #renderer.blit_static_layer(static_layer)
-    #renderer.flush(force=False)
 
     try:
         while True:
@@ -748,8 +775,7 @@ def main():
 if __name__ == "__main__":
     try:
         if os.name == "nt":
-            # Evita SendKeys, che può causare problemi
-            os.system("")  # solo abilita ANSI
+            os.system("")  
         else:
             sys.stdout.write("\033[8;200;120t")
             sys.stdout.flush()

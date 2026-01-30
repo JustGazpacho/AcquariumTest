@@ -8,7 +8,7 @@
       "speed": 0.6,
       "role": "prey",
       "max_population": 60,
-      "rgb_fg": [159, 194, 225],
+      "rgb_fg": [220, 51, 28],
       "flip_allowed": true,
       "schooling": {
         "neighbor_radius_x": 45,
@@ -105,25 +105,74 @@
       "vertical_bias": 0.25
     },
     {
-      "name": "jelly",
+      "name_specie": "jelly",
+      "name": "jellySmall",
+      "shape_frames": [
+  [
+    " ___ ",
+    "(___)",
+    " | | ",
+    " |  "
+  ],
+  [
+    "  __ ",
+    " (__) ",
+    "  | | ",
+    "  | | "
+  ],
+  [
+    "   _  ",
+    "  /_\\ ",
+    "   || ",
+    "   || "
+  ],
+  [
+    "   _  ",
+    "  /_\\ ",
+    "   || ",
+    "   || "
+  ],
+  [
+    "  __  ",
+    " (__) ",
+    "  | | ",
+    "    | "
+  ]
+    ],
+      "animation_speed": 0.18,
+      "speed": 0.3,
+      "role": "float",
+      "max_population": 6,
+      "rgb_fg": [0, 71, 171],
+      "flip_allowed": false,
+      "movement": {
+    "drift_down": 0.05,
+    "push_up": 0.15,
+    "drag": 1.5,
+    "max_up": -0.25,
+    "max_down": 0.005,
+
+    "contract_chance_base": 0.0006,
+    "contract_chance_depth": 0.005,
+    "contract_duration_min": 0.10,
+    "contract_duration_max": 0.20
+  }
+    },
+    {
+      "name_specie": "jelly",
+      "name": "jellyBig",
       "shape_frames": [
         [
           " ____ ",
           "(____)",
           " |  | ",
-          " |  | "
+          "|  | "
         ],
         [
-          " ____ ",
-          "(____)",
-          " ||  |",
-          " ||  |"
-        ],
-        [
-          " ____ ",
-          "(____)",
-          " | || ",
-          " | || "
+          " /\\ ",
+          "/__\\",
+          " ||",
+          " ||"
         ],
         [
           " ____ ",
@@ -134,22 +183,40 @@
         [
           " ____ ",
           "(____)",
-          " |  | ",
-          " || | "
+          " |||| ",
+          "  ||  "
         ],
         [
           " ____ ",
           "(____)",
           " |  | ",
           " |  | "
+        ],
+        [
+          " ____ ",
+          "(____)",
+          " |  | ",
+          "  |  | "
         ]
       ],
-      "animation_speed": 0.25,
+      "animation_speed": 0.18,
       "speed": 0.3,
       "role": "float",
       "max_population": 6,
       "rgb_fg": [255, 0, 200],
-      "flip_allowed": false
+      "flip_allowed": false,
+      "movement": {
+    "drift_down": 0.00005,
+    "push_up": 0.15,
+    "drag": 1.5,
+    "max_up": -0.15,
+    "max_down": 0.05,
+
+    "contract_chance_base": 0.006,
+    "contract_chance_depth": 0.01,
+    "contract_duration_min": 0.18,
+    "contract_duration_max": 0.32
+  }
     }
   ],
 
