@@ -657,11 +657,6 @@ def main():
                 fg_code = fg(*rgb_sand)
                 static_layer[y][x] = (ch, fg_code, "")
 
-    #renderer.clear_back()
-    renderer.blit_static_layer(static_layer)
-    renderer.flush(force=True)
-
-    bubble_intro(renderer, static_layer, visible_y, visible_x)
 
     fish_list = []
     for cfg in config["species"]:
@@ -696,12 +691,8 @@ def main():
     sys.stdout.write(CLEAR + move(1, 1) + HIDE_CURSOR)
     sys.stdout.flush()
 
- 
-    
-    renderer.clear_back()
       
-    bubble_intro(renderer, static_layer, visible_y, visible_x,timesleep=0)
-    renderer.blit_static_layer(static_layer) 
+    bubble_intro(renderer, static_layer, visible_y, visible_x,timesleep=0.02)
 
     try:
         while True:
@@ -772,12 +763,15 @@ def main():
         sys.stdout.write(RESET + SHOW_CURSOR + CLEAR + move(1, 1))
         sys.stdout.flush()
 
+         
+
 if __name__ == "__main__":
     try:
         if os.name == "nt":
             os.system("")  
         else:
-            sys.stdout.write("\033[8;200;120t")
+            #sys.stdout.write("\033[8;200;120t")
+            sys.stdout.write("\033[8;300;400")
             sys.stdout.flush()
     except Exception as e:
         print("Errore durante l'inizializzazione:", e)

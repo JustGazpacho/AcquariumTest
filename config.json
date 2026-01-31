@@ -112,10 +112,37 @@
     },
     {
       "name": "bigfish",
-      "shape": [[">(((o>"]],
+      "shape": [[">(((°>"]],
       "speed": 0.3,
       "role": "predator",
       "max_population": 3,
+      "rgb_fg": [166, 75, 52],
+      "flip_allowed": true,
+      "schooling": {
+        "neighbor_radius_x": 90,
+        "neighbor_radius_y": 14,
+        "alignment_chance": 0.05,
+        "cohesion": 0.005,
+        "jitter": 0.01,
+        "wave_strength": 0.05,
+        "lane_lock": false
+      }
+    },
+    {
+      "name": "moonfish",
+      "shape": [[
+        "   |\\      ",
+        "  _| \\__   ",
+        " (       \\ ",
+        "(    || >°)",
+        " (_   ___/ ",
+        "   | /     ",
+        "   |/      "
+    ]
+      ],
+      "speed": 0.25,
+      "role": "predator",
+      "max_population": 1,
       "rgb_fg": [166, 75, 52],
       "flip_allowed": true,
       "schooling": {
@@ -186,12 +213,15 @@
       "name_specie": "jelly",
       "name": "jellyBig",
       "shape_frames": [
-        [" ____ ", "(____)", " |  | ", "|  | "],
+        [" ____ ",
+         "(____)",
+          " |  | ",
+           "|  | "],
         [" /\\ ", "/__\\", " ||", " ||"],
         [" ____ ", "(____)", " |||| ", " |||| "],
         [" ____ ", "(____)", " |||| ", "  ||  "],
         [" ____ ", "(____)", " |  | ", " |  | "],
-        [" ____ ", "(____)", " |  | ", "  |  | "]
+        [" ____ ", "(____)", " |  | ", "|  | "]
       ],
       "animation_speed": 0.18,
       "speed": 0.3,
