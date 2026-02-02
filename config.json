@@ -5,10 +5,11 @@
       "name":"sh",
       "shape": [
         "         _╔_             ",
-        "     ____|  \\__________  ",
-        "   _/                  \\ ",
-        "╠═(_   O   O   O   O    )",
+        "     ____|°°\\__________  ",
+        "   _/¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸\\ ",
+        "╠═(_■■■O■■■O■■■O■■■O■■■■)",
         "    \\__________________/ "
+        
       ],
       "speed": 0.02,
       "max_population": 1,
@@ -248,67 +249,52 @@
 
   "static_objects": [
     {
-     "type":"static",
-     "shape":[
-      "____________________________",
-      "(_( (_(_(_( (_(_(_(_( (_(_(_)",
-      "  / / \\ \\ / / \\ \\   / / \\ \\",
-      " / /   \\ / /   \\ \\/ /    \\ \\",
-      "| |     \\| |    | | |     | |",
-      "\\_\\     /\\_\\   /_/\\_\\    /_/"
-    ],
-     "y_offset_from_bottom": 1,
-      "random_x": true,
-      "count": 1,
-      "rgb_fg": [242, 235, 227]
-    },
-    {
       "type": "static",
-      "shape": ["   |   ", "  /|   ", "  | |  ", "  \\|/  ", "   |   ", "  / \\  "],
+      "shape": [
+        "\\       |       /",
+        " \\      |      /",
+        "  \\     |     /",
+        "   \\    |    /",
+        "    \\   |   /",
+        "     \\  |  /",
+        "      \\ | /",
+        "       \\|/",
+        "        |"
+      ],
       "y_offset_from_bottom": 1,
       "random_x": true,
-      "count": 4,
+      "count": 8,
       "rgb_fg": [20, 120, 40]
     },
     {
       "type": "static",
-      "shape": ["   |   ", "   |\\  ", "   | \\ ", "   | | ", "   |/  ", "   |   ", "  / \\  "],
+      "shape": [
+        "( ",
+        " )", 
+        "( ", 
+        " )", 
+        "( ", 
+        " ) "
+      ],
       "y_offset_from_bottom": 1,
       "random_x": true,
-      "count": 3,
+      "count": 8,
+      "rgb_fg": [20, 120, 40]
+    },
+    {
+      "type": "static",
+      "shape": [
+        " )",
+        "( ",
+        " )", 
+        "( ", 
+        " )", 
+        "( "
+      ],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 8,
       "rgb_fg": [30, 150, 60]
-    },
-    {
-      "type": "static",
-      "shape": ["   |   ", "  / \\  ", "  | |  ", " /   \\ ", "  | |  ", "  \\|/  "],
-      "y_offset_from_bottom": 1,
-      "random_x": true,
-      "count": 3,
-      "rgb_fg": [50, 170, 90]
-    },
-    {
-      "type": "static",
-      "shape": ["   |   ", "   |   ", "  /|\\  ", "  | |  ", "  | |  ", "  \\|/  ", "   |   "],
-      "y_offset_from_bottom": 1,
-      "random_x": true,
-      "count": 2,
-      "rgb_fg": [25, 140, 50]
-    },
-    {
-      "type": "static",
-      "shape": ["   |   ", "   |   ", "   |\\  ", "   | | ", "  / |  ", "  | |  ", "   |/  ", "   |   "],
-      "y_offset_from_bottom": 1,
-      "random_x": true,
-      "count": 2,
-      "rgb_fg": [40, 180, 80]
-    },
-    {
-      "type": "static",
-      "shape": ["   |   ", "  \\|/  ", "   |   ", "  / \\  ", "  | |  "],
-      "y_offset_from_bottom": 1,
-      "random_x": true,
-      "count": 2,
-      "rgb_fg": [60, 200, 100]
     },
     {
       "type": "static",
@@ -328,14 +314,6 @@
     },
     {
       "type": "static",
-      "shape": ["   |   ", "  /|\\  ", "  /|\\  ", "   |   "],
-      "y_offset_from_bottom": 1,
-      "random_x": true,
-      "count": 3,
-      "rgb_fg": [255, 180, 220]
-    },
-    {
-      "type": "static",
       "shape": ["  ___  ", " /   \\ ", "|_____|"],
       "y_offset_from_bottom": 1,
       "random_x": true,
@@ -352,7 +330,14 @@
     },
     {
       "type": "static",
-      "shape": [" ^^^^^^^", " \\ \\ / /", "  >   < ", " /   ° \\ ", "|   ^   |", "|  | |  |", " -------"],
+      "shape": [
+      " ^^^^^^^", 
+      " \\ \\ / /", 
+      "  >   < ", 
+      " /   ° \\ ", 
+      "|   ^   |", 
+      "|  | |  |", 
+      " -------"],
       "y_offset_from_bottom": 1,
       "random_x": true,
       "count": 1,
