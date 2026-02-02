@@ -12,6 +12,107 @@ def load_config():
     with open(CONFIG_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
 
+def load_acq():
+        config = load_config()
+        enable_raw_mode()
+
+        try:
+            size = os.get_terminal_size()
+            visible_x = size.columns
+            visible_y = size.lines
+        except:
+            visible_x = 120
+            visible_y = 40
+
+        world_y = visible_y
+        world_x = visible_x
+
+        renderer = Renderer(visible_y, visible_x)
+
+        
+        static_layer = [[(" ", "", "") for _ in range(visible_x)] for _ in range(visible_y)]
+        static_objects = []
+        occupied = []
+
+    
+        for obj in config["static_objects"]:
+            shape = obj["shape"]
+            h = len(shape)
+            w = max(len(line) for line in shape)
+            count = obj.get("count", 1)
+
+            for _ in range(count):
+                y = visible_y - obj["y_offset_from_bottom"] - h
+                if y < 0:
+                    y=0
+
+                if obj.get("random_x", False):
+                    x = find_free_x_position(w, visible_x, occupied)
+                else:
+                    x = obj.get("x", 0)
+                    if x + w > visible_x:
+                        x = max(0, visible_x - w)
+
+                occupied.append((x, x + w))
+                occupied.sort()
+
+                if obj.get("specie") == "starfish":
+                    if obj["name"] == "starfishA":
+                        y = visible_y // 2 + int(random.uniform( visible_y / 8, visible_y / 4))
+                    elif obj["name"] == "starfishB":
+                        y = visible_y // 2 - int(random.uniform( visible_y / 3, visible_y / 2))
+
+                so = StaticObject(
+                    y, x, shape,
+                    rgb_fg=obj.get("rgb_fg"),
+                    rgb_bg=obj.get("rgb_bg")
+                )
+                static_objects.append(so)
+                so.draw_on_layer(static_layer)
+
+        
+        rgb_sand = config.get("rgb_sand", [194, 178, 128])
+        sand_chars = [",", ".", ":", "_", "-", "`", "~"]
+
+        for y in range(max(0, visible_y - 2), visible_y):
+            for x in range(visible_x):
+                
+                if static_layer[y][x] == ("", "", "") or static_layer[y][x][0] == " ":
+                    ch = random.choice(sand_chars)
+                    fg_code = fg(*rgb_sand)
+                    static_layer[y][x] = (ch, fg_code, "")
+
+
+        fish_list = []
+        for cfg in config["species"]:
+            initial_n = min(10, cfg.get("max_population", 10))
+            for _ in range(initial_n):
+                fish = Fish(world_y, world_x, cfg, visible_y)
+                fish.school_id = assign_school(fish, fish_list)
+                if fish.school_id not in school_directions:
+                    school_directions[fish.school_id] = random.choice([-1, 1])
+
+                fish_list.append(fish)
+
+                
+
+    
+        b_cfg = config["bubbles"]
+
+        bubbles = [
+            Bubble(
+                world_y,
+                world_x,
+                visible_y,
+                rgb_fg=b_cfg.get("rgb_fg"),
+                rgb_bg=b_cfg.get("rgb_bg")
+            )
+            for _ in range(b_cfg["count"])
+        ]
+
+        sys.stdout.write(CLEAR + move(1, 1) + HIDE_CURSOR)
+        sys.stdout.flush()
+        return config, static_layer, fish_list, bubbles,visible_y,visible_x,world_y,world_x
 
 def move(y, x):
     return f"\033[{y};{x}H"
@@ -591,108 +692,11 @@ def sweep_bottom(renderer, static_layer, visible_y, visible_x):
                 renderer.set_cell(y, x, ch, fg_code, bg_code)
                 
 
-
-
 def main():
-    config = load_config()
-    enable_raw_mode()
-
-    try:
-        size = os.get_terminal_size()
-        visible_x = size.columns
-        visible_y = size.lines
-    except:
-        visible_x = 120
-        visible_y = 40
-
-    world_y = visible_y
-    world_x = visible_x
-
-    renderer = Renderer(visible_y, visible_x)
-
-    
-    static_layer = [[(" ", "", "") for _ in range(visible_x)] for _ in range(visible_y)]
-    static_objects = []
-    occupied = []
-
-   
-    for obj in config["static_objects"]:
-        shape = obj["shape"]
-        h = len(shape)
-        w = max(len(line) for line in shape)
-        count = obj.get("count", 1)
-
-        for _ in range(count):
-            y = visible_y - obj["y_offset_from_bottom"] - h
-            if y < 0:
-                y = 0
-
-            if obj.get("random_x", False):
-                x = find_free_x_position(w, visible_x, occupied)
-            else:
-                x = obj.get("x", 0)
-                if x + w > visible_x:
-                    x = max(0, visible_x - w)
-
-            occupied.append((x, x + w))
-            occupied.sort()
-
-            so = StaticObject(
-                y, x, shape,
-                rgb_fg=obj.get("rgb_fg"),
-                rgb_bg=obj.get("rgb_bg")
-            )
-            static_objects.append(so)
-            so.draw_on_layer(static_layer)
-
-    
-    rgb_sand = config.get("rgb_sand", [194, 178, 128])
-    sand_chars = [",", ".", ":", "_", "-", "`", "~"]
-
-    for y in range(max(0, visible_y - 2), visible_y):
-        for x in range(visible_x):
-            
-            if static_layer[y][x] == ("", "", "") or static_layer[y][x][0] == " ":
-                ch = random.choice(sand_chars)
-                fg_code = fg(*rgb_sand)
-                static_layer[y][x] = (ch, fg_code, "")
-
-
-    fish_list = []
-    for cfg in config["species"]:
-        initial_n = min(10, cfg.get("max_population", 10))
-        for _ in range(initial_n):
-            fish = Fish(world_y, world_x, cfg, visible_y)
-            fish.school_id = assign_school(fish, fish_list)
-            if fish.school_id not in school_directions:
-                school_directions[fish.school_id] = random.choice([-1, 1])
-
-            fish_list.append(fish)
-
-            
-
-   
-    b_cfg = config["bubbles"]
-
-    bubbles = [
-        Bubble(
-            world_y,
-            world_x,
-            visible_y,
-            rgb_fg=b_cfg.get("rgb_fg"),
-            rgb_bg=b_cfg.get("rgb_bg")
-        )
-        for _ in range(b_cfg["count"])
-    ]
-
-
-    last_time = time.time()
-
-    sys.stdout.write(CLEAR + move(1, 1) + HIDE_CURSOR)
-    sys.stdout.flush()
-
-      
-    bubble_intro(renderer, static_layer, visible_y, visible_x,timesleep=0.02)
+    config, static_layer, fish_list, bubbles,visible_y,visible_x,world_y,world_x = load_acq()
+    last_time = time.time() 
+    renderer=Renderer(visible_y, visible_x)  
+    bubble_intro(renderer, static_layer, visible_y, visible_x,timesleep=0.0002)
 
     try:
         while True:
@@ -700,8 +704,19 @@ def main():
             dt = now - last_time
             last_time = now
 
-            if key_pressed() and get_key() == "q":
-                break
+            if key_pressed():
+                key = get_key()
+                if key == "q":
+                    break
+                elif key == "r":
+                    config,static_layer, fish_list, bubbles,visible_y,visible_x,world_y,world_x = load_acq()
+                    renderer=Renderer(visible_y, visible_x)
+                   
+                    renderer.front = [[None for _ in range(visible_x)] for _ in range(visible_y)]  
+                    bubble_intro(renderer, static_layer, visible_y, visible_x,timesleep=0.0002)
+                    renderer.clear_back()
+                    renderer.blit_static_layer(static_layer)
+                    renderer.flush(force=True)
 
             renderer.clear_back()
             renderer.blit_static_layer(static_layer)
@@ -764,7 +779,6 @@ def main():
         sys.stdout.flush()
 
          
-
 if __name__ == "__main__":
     try:
         if os.name == "nt":
@@ -776,3 +790,30 @@ if __name__ == "__main__":
     except Exception as e:
         print("Errore durante l'inizializzazione:", e)
     main()
+
+
+
+
+'''
+murena test
+
+{
+      "type": "static",
+      "shape": [
+        "    _____________________",
+        "   /       _             \\",
+        "   |      /_\\_________   \\_____",
+        "   /     |_____________^_______  \\",
+        "  /      |                     \\  |",
+        " /      |               ©_______)  \\",
+        "/      |_______________________/    ||"
+      ],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 1,
+      "rgb_fg": [200, 100, 220]
+    },
+
+
+
+'''

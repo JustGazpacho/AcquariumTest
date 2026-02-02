@@ -375,7 +375,10 @@
       "rgb_fg": [187, 218, 133]
     },
     {
+      "specie":"starfish",
+      "name":"starfishA",
       "type": "static",
+      "y_offset_from_bottom": 1,
       "shape": [
         "     ▄      ",
         "     ▄▄▄    ",
@@ -384,12 +387,14 @@
         "  ▄▄   ▄▄   ",
         " ▄      ▄   "
     ],
-      "y_offset_from_bottom": 15,
       "random_x": true,
       "count": 1,
       "rgb_fg": [70, 47, 92]
     },
     {
+      "specie":"starfish",
+      "name":"starfishB",
+      "y_offset_from_bottom": 1,
       "type": "static",
       "shape": [
         "       ▄     ",
@@ -398,7 +403,6 @@
         "    ▄▄ ▄     ",
         "   ▄    ▄    "
     ],
-      "y_offset_from_bottom": 35,
       "random_x": true,
       "count": 1,
       "rgb_fg": [148, 196, 69]
