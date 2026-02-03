@@ -183,6 +183,25 @@
       "vertical_bias": 0.25
     },
     {
+      "name": "giantCrab",
+      "shape": [[
+         "         .  .         ", 
+         " ▄█▀▀▀   ▐  ▌   ▀▀▀█▄ ",
+         "▄███▄▄  ▀▄██▄▀  ▄▄███▄",
+         "▀██▄▄▄▄████████▄▄▄▄██▀", 
+         "  ▄▄▄▄██████████▄▄▄▄  ", 
+         " ▐▐▀▐▀ ▀██████▀ ▀▌▀▌▌ "
+]],
+      "speed": 0.03,
+      "role": "bottom",
+      "max_population": 1,
+      "rgb_fg": [223, 122, 0],
+      "flip_allowed": false,
+      "preferred_depth": "bottom",
+      "vertical_bias": 0.25
+    },
+
+    {
       "name_specie": "jelly",
       "name": "jellySmall",
       "shape_frames": [
@@ -284,15 +303,42 @@
     {
       "type": "static",
       "shape": [
-        "\\       |       /",
-        " \\      |      /",
-        "  \\     |     /",
-        "   \\    |    /",
-        "    \\   |   /",
-        "     \\  |  /",
-        "      \\ | /",
-        "       \\|/",
-        "        |"
+        " ]",
+        "[ ",
+        " ]",
+        "[ ",
+        " ]",
+        "[ "
+      ],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 8,
+      "rgb_fg": [20, 120, 40]
+    },
+    {
+      "type": "static",
+      "shape": [
+        "[ ",
+        " ]",
+        "[ ",
+        " ]",
+        "[ ",
+        " ]"
+      ],
+      "y_offset_from_bottom": 1,
+      "random_x": true,
+      "count": 8,
+      "rgb_fg": [20, 120, 40]
+    },
+    {
+      "type": "static",
+      "shape": [
+        "{ ",
+        " }", 
+        "{ ",
+        " }",  
+        "{ ",
+        " }" 
       ],
       "y_offset_from_bottom": 1,
       "random_x": true,

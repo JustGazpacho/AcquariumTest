@@ -678,7 +678,7 @@ def bubble_intro(renderer, static_layer, visible_y, visible_x,timesleep=0.05):
         bubbles.append({
             "x": x,
             "y": visible_y + random.randint(0, 3),
-            "char": random.choice(["o", "O", ".", "0"])
+            "char": random.choice(["o", "O", ".", "0", "°"])
         })
 
     steps = visible_y + 3
