@@ -1,17 +1,62 @@
 {
   "species": [
     {
+      "name": "bigfish",
+      "shape": [[">(((°>"]],
+      "speed": 0.15,
+      "role": "predator",
+      "max_population": 3,
+      "rgb_fg": [166, 75, 52],
+      "flip_allowed": true,
+      "schooling": {
+        "neighbor_radius_x": 90,
+        "neighbor_radius_y": 14,
+        "alignment_chance": 0.05,
+        "cohesion": 0.005,
+        "jitter": 0.01,
+        "wave_strength": 0.05,
+        "lane_lock": false
+      }
+    },
+    {
+      "name": "moonfish",
+      "shape": [[
+        "   |\\      ",
+        "  _|¨\\__   ",
+        " (¨¨¨¨¨¨¨\\ ",
+        "(¨¨¨¨||¨>°)",
+        " (_¨¨¨___/ ",
+        "   |¨/     ",
+        "   |/      "
+    ]
+      ],
+      "speed": 0.1,
+      "role": "predator",
+      "max_population": 1,
+      "rgb_fg": [91, 107, 130],
+      "flip_allowed": true,
+      "schooling": {
+        "neighbor_radius_x": 90,
+        "neighbor_radius_y": 14,
+        "alignment_chance": 0.05,
+        "cohesion": 0.005,
+        "jitter": 0.01,
+        "wave_strength": 0.05,
+        "lane_lock": false
+      }
+    },
+    {
       "name_specie":"submarine",
       "name":"sh",
       "shape": [
         "         _╔_             ",
         "     ____|°°\\__________  ",
-        "   _/¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸\\ ",
+        "   _/------------------\\ ",
         "╠═(_■■■O■■■O■■■O■■■O■■■■)",
         "    \\__________________/ "
         
       ],
-      "speed": 0.02,
+      "speed": 0.01,
       "max_population": 1,
       "rgb_fg": [255, 105, 180],
       "flip_allowed": true,
@@ -20,7 +65,7 @@
     {
       "name": "smallfish",
       "shape": [["><>"]],
-      "speed": 0.6,
+      "speed": 0.3,
       "role": "prey",
       "max_population": 40,
       "rgb_fg": [220, 51, 28],
@@ -49,7 +94,7 @@
         "/\\/",
         " / "
         ],
-      "speed": 0.3,
+      "speed": 0.14,
       "role": "prey",
       "max_population": 10,
       "rgb_fg": [207, 181, 59],
@@ -74,7 +119,7 @@
     {
       "name": "mediumfish",
       "shape": [["><^>>"]],
-      "speed": 0.3,
+      "speed": 0.12,
       "role": "prey",
       "max_population": 12,
       "rgb_fg": [236, 160, 84],
@@ -94,7 +139,7 @@
     {
       "name": "roundfish",
       "shape": [["=(o)>"]],
-      "speed": 0.4,
+      "speed": 0.2,
       "role": "prey",
       "max_population": 8,
       "rgb_fg": [36, 232, 75],
@@ -112,60 +157,15 @@
       }
     },
     {
-      "name": "bigfish",
-      "shape": [[">(((°>"]],
-      "speed": 0.3,
-      "role": "predator",
-      "max_population": 3,
-      "rgb_fg": [166, 75, 52],
-      "flip_allowed": true,
-      "schooling": {
-        "neighbor_radius_x": 90,
-        "neighbor_radius_y": 14,
-        "alignment_chance": 0.05,
-        "cohesion": 0.005,
-        "jitter": 0.01,
-        "wave_strength": 0.05,
-        "lane_lock": false
-      }
-    },
-    {
-      "name": "moonfish",
-      "shape": [[
-        "   |\\      ",
-        "  _| \\__   ",
-        " (       \\ ",
-        "(    || >°)",
-        " (_   ___/ ",
-        "   | /     ",
-        "   |/      "
-    ]
-      ],
-      "speed": 0.2,
-      "role": "predator",
-      "max_population": 1,
-      "rgb_fg": [91, 107, 130],
-      "flip_allowed": true,
-      "schooling": {
-        "neighbor_radius_x": 90,
-        "neighbor_radius_y": 14,
-        "alignment_chance": 0.05,
-        "cohesion": 0.005,
-        "jitter": 0.01,
-        "wave_strength": 0.05,
-        "lane_lock": false
-      }
-    },
-    {
       "name": "shark",
       "shape": [[
         "      .      ",
         "\\_____)\\_____",
-        "/--v____ __`<",
+        "/--v____(__`<",
         "        )/   ",
         "        '    "
         ]],
-      "speed": 0.3,
+      "speed": 0.15,
       "role": "predator",
       "max_population": 1,
       "rgb_fg": [96, 124, 142],
@@ -174,7 +174,7 @@
     {
       "name": "crab",
       "shape": [[" (\\_/) "]],
-      "speed": 0.1,
+      "speed": 0.05,
       "role": "bottom",
       "max_population": 2,
       "rgb_fg": [255, 80, 80],
@@ -193,7 +193,7 @@
         ["  __  ", " (__) ", "  | | ", "    | "]
       ],
       "animation_speed": 0.18,
-      "speed": 0.3,
+      "speed": 0.15,
       "role": "float",
       "max_population": 3,
       "rgb_fg": [0, 71, 171],
@@ -248,6 +248,39 @@
 
 
   "static_objects": [
+    {
+      "specie":"starfish",
+      "name":"starfishA",
+      "type": "static",
+      "y_offset_from_bottom": 1,
+      "shape": [
+        "     ▄      ",
+        "     ▄▄▄    ",
+        "▄▄▄▄▄▄▄▄▄▄▄▄",
+        "   ▄▄▄▄▄▄▄  ",
+        "  ▄▄   ▄▄   ",
+        " ▄      ▄   "
+    ],
+      "random_x": true,
+      "count": 1,
+      "rgb_fg": [70, 47, 92]
+    },
+    {
+      "specie":"starfish",
+      "name":"starfishB",
+      "y_offset_from_bottom": 1,
+      "type": "static",
+      "shape": [
+        "       ▄     ",
+        "      ▄▄     ",
+        "  ▄▄▄▄▄▄▄▄▄▄ ",
+        "    ▄▄ ▄     ",
+        "   ▄    ▄    "
+    ],
+      "random_x": true,
+      "count": 1,
+      "rgb_fg": [148, 196, 69]
+    },
     {
       "type": "static",
       "shape": [
@@ -358,40 +391,8 @@
       "random_x": true,
       "count": 1,
       "rgb_fg": [187, 218, 133]
-    },
-    {
-      "specie":"starfish",
-      "name":"starfishA",
-      "type": "static",
-      "y_offset_from_bottom": 1,
-      "shape": [
-        "     ▄      ",
-        "     ▄▄▄    ",
-        "▄▄▄▄▄▄▄▄▄▄▄▄",
-        "   ▄▄▄▄▄▄▄  ",
-        "  ▄▄   ▄▄   ",
-        " ▄      ▄   "
-    ],
-      "random_x": true,
-      "count": 1,
-      "rgb_fg": [70, 47, 92]
-    },
-    {
-      "specie":"starfish",
-      "name":"starfishB",
-      "y_offset_from_bottom": 1,
-      "type": "static",
-      "shape": [
-        "       ▄     ",
-        "      ▄▄     ",
-        "  ▄▄▄▄▄▄▄▄▄▄ ",
-        "    ▄▄ ▄     ",
-        "   ▄    ▄    "
-    ],
-      "random_x": true,
-      "count": 1,
-      "rgb_fg": [148, 196, 69]
     }
+    
   ],
   "bubbles": {
     "count": 35,
