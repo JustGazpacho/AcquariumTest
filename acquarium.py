@@ -336,7 +336,10 @@ class Fish:
         self.flip_allowed = self.cfg.get("flip_allowed", True)
 
         self.height = len(self.shape)
+        self.height = max(1, self.height)
+
         self.width = max(len(row) for row in self.shape)
+        self.width = max(1, self.width)
 
         if self.preferred_depth == "bottom":
             base_y = self.visible_y - self.height - 1
@@ -515,9 +518,15 @@ class Fish:
 
         self.vy *= DRAG
         self.vy = max(MAX_UP, min(self.vy, MAX_DOWN))
+        if not math.isfinite(self.vy):
+            self.vy = 0.0
+
+        if not math.isfinite(self.y):
+            self.y = (self.visible_y - self.height) * 0.5
 
         center = (self.visible_y - self.height) * 0.5
         dist = self.y - center
+        dist = max(-50.0, min(dist, 50.0))
         self.vy -= dist * abs(dist) * 0.00008 
 
         top = 2
@@ -541,10 +550,14 @@ class Fish:
 
       
         frame_count = len(self.base_frames)
-        if self.contracting:
-            self.anim_index = min(frame_count - 1, self.anim_index + 1)
-        else:
-            self.anim_index = max(0, self.anim_index - 1)
+        if frame_count <= 1:
+            self.anim_index = 0
+        else:   
+            if self.contracting:
+                    self.anim_index = min(frame_count - 1, self.anim_index + 1)
+            else:
+                    self.anim_index = max(0, self.anim_index - 1)
+                    
         self.shape = self.base_frames[self.anim_index]
 
         
@@ -601,7 +614,8 @@ class Fish:
 
     def erase(self, renderer, static_layer):
         for dy in range(self.height):
-            for dx in range(self.shape):
+            #for dx in range(self.shape):
+            for dx in range(self.width):
                 px = int(self.x) + dx
                 py = int(self.y) + dy
                 if 0 <= px < renderer.w and 0 <= py < renderer.h:
@@ -611,10 +625,10 @@ class Fish:
 
     def draw(self, renderer):
         if self.dead:
-            px = int(self.x) + dx
+            '''px = int(self.x) + dx
             py = int(self.y) + dy
             if 0 <= px < renderer.w and 0 <= py < renderer.h:
-                renderer.set_cell(py, px, " ", "", "")
+                renderer.set_cell(py, px, " ", "", "")'''
             return
 
         fg_code = fg(*self.rgb_fg) if self.rgb_fg else ""
