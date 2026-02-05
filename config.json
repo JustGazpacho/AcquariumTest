@@ -301,6 +301,8 @@
       "rgb_fg": [148, 196, 69]
     },
     {
+      "specie":"alga[",
+      "cluster": "algas",
       "type": "static",
       "shape": [
         " ]",
@@ -316,6 +318,8 @@
       "rgb_fg": [20, 120, 40]
     },
     {
+      "specie":"alga]",
+      "cluster": "algas",
       "type": "static",
       "shape": [
         "[ ",
@@ -331,6 +335,8 @@
       "rgb_fg": [20, 120, 40]
     },
     {
+      "specie":"alga}",
+      "cluster": "algas",
       "type": "static",
       "shape": [
         "{ ",
@@ -346,6 +352,8 @@
       "rgb_fg": [20, 120, 40]
     },
     {
+      "specie":"alga)",
+      "cluster": "algas",
       "type": "static",
       "shape": [
         "( ",
@@ -361,6 +369,8 @@
       "rgb_fg": [20, 120, 40]
     },
     {
+      "specie":"alga(",
+      "cluster": "algas",
       "type": "static",
       "shape": [
         " )",
@@ -392,8 +402,17 @@
       "rgb_fg": [153, 153, 0]
     },
     {
+      "specie":"patrH",
+      "cluster": "houses",
+      "cluster_hard": true,
+      "cluster_gap": 1,
       "type": "static",
-      "shape": ["  ___  ", " /   \\ ", "|_____|"],
+      "shape": [
+        "    ░░░░░░░░░░░░    ",
+        "   ░░░░░░░░░░░░░░   ",
+        "  ░░░░░░░░░░░░░░░░  ",
+        " ░░░░░░░░░░░░░░░░░░ "
+    ],
       "y_offset_from_bottom": 1,
       "random_x": true,
       "count": 1,
@@ -408,15 +427,27 @@
       "rgb_fg": [255, 204, 255]
     },
     {
+      "specie":"spongH",
+      "cluster": "houses",
+      "cluster_hard": true,
+      "cluster_gap": 1,
       "type": "static",
       "shape": [
-      " ^^^^^^^", 
-      " \\ \\ / /", 
-      "  >   < ", 
-      " /   ° \\ ", 
-      "|   ^   |", 
-      "|  | |  |", 
-      " -------"],
+        "⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⢸⡄⠀⣀⢀⣴⠂⠀⠀",
+        "⠀⢀⡀⠀⣄⢸⠰⡠⢡⠊⠇⠀⣠⡀",
+        "⠀⠀⠑⡑⠼⢹⠀⢣⠃⣸⠔⡸⠁⠀",
+        "⠠⠤⡀⠼⢀⠙⢆⢆⠔⢀⠸⢄⠖⠀",
+        "⠀⠀⠈⠐⠄⠀⠢⢋⠂⢀⠔⠁⠀⠀",
+        "⠀⠀⠀⢀⠨⠢⣀⡃⠠⠬⡀⠀⠀⠀",
+        "⠀⢀⡐⠁⡡⠄⠁⠑⡤⡊⠈⢆⠀⠀",
+        "⠀⣌⠕0 ⠈⡢⣎⠀⢈⠖⢎⢆⠀",
+        "⢸⢣⠀⢀⠕⢆⡀⢀⠱⠢⡀⢀⠝⡆",
+        "⢨⡔⠉⠢⡀⢀⠜⠑⢄⢀⠄⠋0⡅",
+        "⠘⡣⡀⡠⠘⠣___⠔⠉⠂⡤⢊⠇",
+        "⠀⢓⠉⠣⢀⡠|--|⡐⠁⡐⡐  ",
+        " ⠑⠔___|__|___⠙    "
+    ],
       "y_offset_from_bottom": 1,
       "random_x": true,
       "count": 1,

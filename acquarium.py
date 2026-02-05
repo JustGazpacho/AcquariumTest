@@ -6,6 +6,9 @@ import sys
 import os
 
 school_directions = {}
+cluster_centers = {}
+cluster_bounds = {}
+
 CONFIG_FILE = "config.json"
 
 def load_config():
@@ -40,6 +43,7 @@ def load_acq():
             h = len(shape)
             w = max(len(line) for line in shape)
             count = obj.get("count", 1)
+            gap=0
 
             for _ in range(count):
                 y = visible_y - obj["y_offset_from_bottom"] - h
@@ -47,13 +51,23 @@ def load_acq():
                     y=0
 
                 if obj.get("random_x", False):
-                    x = find_free_x_position(w, visible_x, occupied)
+                    '''x = find_free_x_position(w, visible_x, occupied)'''
+                    x = find_free_x_position(
+                        w,
+                        visible_x,
+                        occupied,
+                        cluster=obj.get("cluster"),
+                        cluster_radius_pct=obj.get("cluster_radius_pct", 0.15),
+                        cluster_hard=obj.get("cluster_hard", False),
+                        gap=int(obj.get("cluster_gap", 0))
+                    )
+
                 else:
                     x = obj.get("x", 0)
                     if x + w > visible_x:
                         x = max(0, visible_x - w)
 
-                occupied.append((x, x + w))
+                occupied.append((x, x + w + gap))
                 occupied.sort()
 
                 if obj.get("specie") == "starfish":
@@ -643,11 +657,18 @@ class Fish:
                 if 0 <= px < renderer.w and 0 <= py < renderer.h:
                     renderer.set_cell(py, px, ch, fg_code, bg_code)
 
+def overlaps(x, width, occupied):
+    for ox1, ox2 in occupied:
+        if not (x + width <= ox1 or x >= ox2):
+            return True
+    return False
 
-def find_free_x_position(width, visible_x, occupied):
+
+def find_uniform_x(width, visible_x, occupied):
+    max_x = max(0, visible_x - width)
+
     if not occupied:
-        max_x = visible_x - width
-        return random.randint(0, max_x) if max_x >= 0 else 0
+        return random.randint(0, max_x)
 
     free_spaces = []
 
@@ -656,8 +677,7 @@ def find_free_x_position(width, visible_x, occupied):
         free_spaces.append((0, first_start))
 
     for (s1, e1), (s2, e2) in zip(occupied, occupied[1:]):
-        gap = s2 - e1
-        if gap >= width:
+        if s2 - e1 >= width:
             free_spaces.append((e1, s2))
 
     last_end = occupied[-1][1]
@@ -665,12 +685,123 @@ def find_free_x_position(width, visible_x, occupied):
         free_spaces.append((last_end, visible_x))
 
     if not free_spaces:
-        return random.randint(0, max(0, visible_x - width))
+        return random.randint(0, max_x)
 
+    # bias verso il centro dello spazio libero
     start, end = random.choice(free_spaces)
-    max_x = end - width
-    return random.randint(start, max_x)
- 
+    mid = (start + end - width) // 2
+    jitter = random.randint(-3, 3)
+
+    return max(start, min(mid + jitter, end - width))
+
+
+'''def find_free_x_position(
+    width,
+    visible_x,
+    occupied,
+    *,
+    cluster=None,
+    cluster_radius_pct=0.06,
+    cluster_hard=False,
+    gap=1
+):
+    max_x = max(0, visible_x - width - gap)
+
+    # ---------- HARD CLUSTER ----------
+    if cluster and cluster_hard:
+        radius = max(1, int(visible_x * cluster_radius_pct))
+
+        if cluster not in cluster_centers:
+            min_center = radius
+            max_center = max(radius, max_x - radius)
+            center = random.randint(min_center, max_center)
+
+            left  = max(0, center - radius)
+            right = min(visible_x, center + radius)
+
+            cluster_centers[cluster] = (left, right)
+
+        left, right = cluster_centers[cluster]
+
+        for _ in range(100):
+            x = random.randint(left, max(left, right - width - gap))
+
+            # controllo SOLO X
+            if all(
+                x + width + gap <= ox1 or x >= ox2 + gap
+                for ox1, ox2 in occupied
+            ):
+                return x
+
+        # fallback: prendi un punto qualsiasi nello spazio del cluster
+        x = random.randint(left, max(left, right - width - gap))
+        return x
+
+    # ---------- UNIFORME ----------
+    return find_uniform_x(width, visible_x, occupied)
+
+'''
+
+def find_free_x_position(
+    width,
+    visible_x,        # <-- è una WIDTH, non (min,max)
+    occupied,
+    *,
+    cluster=None,
+    cluster_radius_pct=0.15,
+    cluster_hard=False,
+    gap=1,
+    max_tries=80
+):
+    xmin = 0
+    xmax = max(0, visible_x - width - gap)
+
+    if xmax <= xmin:
+        return xmin
+
+    # --- CLUSTER LOGIC ---
+    cluster_center = None
+
+    if cluster and occupied:
+        centers = [(a + b) / 2 for a, b in occupied]
+        cluster_center = sum(centers) / len(centers)
+
+        radius = int(visible_x * cluster_radius_pct)
+        cmin = max(xmin, int(cluster_center - radius))
+        cmax = min(xmax, int(cluster_center + radius))
+    else:
+        cmin, cmax = xmin, xmax
+
+    # --- TENTATIVI ---
+    for _ in range(max_tries):
+        if cluster_center is not None and not cluster_hard:
+            x = random.randint(cmin, cmax)
+        else:
+            x = random.randint(xmin, xmax)
+
+        interval = (x - gap, x + width + gap)
+
+        if all(interval[1] <= a or interval[0] >= b for a, b in occupied):
+            return x
+
+    # --- FALLBACK INTELLIGENTE ---
+    occupied_sorted = sorted(occupied)
+    last_end = xmin
+    best_x = xmin
+    best_space = 0
+
+    for a, b in occupied_sorted:
+        space = a - last_end
+        if space >= width + gap and space > best_space:
+            best_space = space
+            best_x = last_end + gap
+        last_end = max(last_end, b)
+
+    final_space = xmax - last_end
+    if final_space >= width + gap and final_space > best_space:
+        best_x = last_end + gap
+
+    return int(best_x)
 
 def bubble_intro(renderer, static_layer, visible_y, visible_x,timesleep=0.05):
     bubbles = []
@@ -844,4 +975,11 @@ ascii test
       "rgb_fg": [242, 235, 227]
     },
 
+    " ^^^^^^^", 
+      " \\ \\ / /", 
+      "  >   < ", 
+      " /   ° \\ ", 
+      "|   ^   |", 
+      "|  | |  |", 
+      " -------"],
 '''
