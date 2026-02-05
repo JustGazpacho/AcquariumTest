@@ -744,7 +744,7 @@ def find_uniform_x(width, visible_x, occupied):
 
 def find_free_x_position(
     width,
-    visible_x,        # <-- è una WIDTH, non (min,max)
+    visible_x,        
     occupied,
     *,
     cluster=None,

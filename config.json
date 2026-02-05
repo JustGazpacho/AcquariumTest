@@ -5,7 +5,7 @@
       "shape": [[">(((°>"]],
       "speed": 0.15,
       "role": "predator",
-      "max_population": 3,
+      "max_population": 10,
       "rgb_fg": [166, 75, 52],
       "flip_allowed": true,
       "schooling": {
@@ -67,7 +67,7 @@
       "shape": [["><>"]],
       "speed": 0.3,
       "role": "prey",
-      "max_population": 40,
+      "max_population": 60,
       "rgb_fg": [220, 51, 28],
       "flip_allowed": true,
       "schooling": {
@@ -96,7 +96,7 @@
         ],
       "speed": 0.14,
       "role": "prey",
-      "max_population": 10,
+      "max_population": 15,
       "rgb_fg": [207, 181, 59],
       "flip_allowed": true,
       "schooling": {
@@ -141,7 +141,7 @@
       "shape": [["=(o)>"]],
       "speed": 0.2,
       "role": "prey",
-      "max_population": 8,
+      "max_population": 18,
       "rgb_fg": [36, 232, 75],
       "flip_allowed": true,
       "schooling": {
@@ -167,7 +167,7 @@
         ]],
       "speed": 0.15,
       "role": "predator",
-      "max_population": 1,
+      "max_population": 2,
       "rgb_fg": [96, 124, 142],
       "flip_allowed": true
     },
@@ -216,7 +216,7 @@
       "role": "float",
       "max_population": 3,
       "rgb_fg": [0, 71, 171],
-      "flip_allowed": false,
+      "flip_allowed": true,
       "movement": {
         "drift_down": 0.05,
         "push_up": 0.15,
@@ -235,20 +235,40 @@
       "shape_frames": [
         [" ____ ",
          "(____)",
-          " |  | ",
-           "|  | "],
-        [" /\\ ", "/__\\", " ||", " ||"],
-        [" ____ ", "(____)", " |||| ", " |||| "],
-        [" ____ ", "(____)", " |||| ", "  ||  "],
-        [" ____ ", "(____)", " |  | ", " |  | "],
-        [" ____ ", "(____)", " |  | ", "|  | "]
+         " |  | ",
+         "|  | "],
+
+       [" /\\ ", 
+        "/__\\", 
+        " ||", 
+        " ||"],
+
+        [" ____ ", 
+         "(____)", 
+         " |||| ", 
+         " |||| "],
+
+        [" ____ ", 
+         "(____)", 
+         " |||| ", 
+         "  ||  "],
+
+        [" ____ ", 
+         "(____)", 
+         " |  | ", 
+         " |  | "],
+
+        [" ____ ", 
+         "(____)", 
+         " |  | ", 
+         "|  |  "]
       ],
       "animation_speed": 0.18,
       "speed": 0.3,
       "role": "float",
       "max_population": 4,
       "rgb_fg": [255, 0, 200],
-      "flip_allowed": false,
+      "flip_allowed": true,
       "movement": {
         "drift_down": 0.00005,
         "push_up": 0.15,
@@ -258,7 +278,7 @@
         "contract_chance_base": 0.006,
         "contract_chance_depth": 0.01,
         "contract_duration_min": 0.18,
-        "contract_duration_max": 0.32
+        "contract_duration_max": 0.2
       }
     }
   ],
@@ -441,7 +461,7 @@
         "⠀⠀⠈⠐⠄⠀⠢⢋⠂⢀⠔⠁⠀⠀",
         "⠀⠀⠀⢀⠨⠢⣀⡃⠠⠬⡀⠀⠀⠀",
         "⠀⢀⡐⠁⡡⠄⠁⠑⡤⡊⠈⢆⠀⠀",
-        "⠀⣌⠕0 ⠈⡢⣎⠀⢈⠖⢎⢆⠀",
+        "⠀⣌⠕0 ⠈⡢⣎⠀⢈⠖⢎ ⢆⠀",
         "⢸⢣⠀⢀⠕⢆⡀⢀⠱⠢⡀⢀⠝⡆",
         "⢨⡔⠉⠢⡀⢀⠜⠑⢄⢀⠄⠋0⡅",
         "⠘⡣⡀⡠⠘⠣___⠔⠉⠂⡤⢊⠇",
