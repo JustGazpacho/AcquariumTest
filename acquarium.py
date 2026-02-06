@@ -16,117 +16,116 @@ def load_config():
         return json.load(f)
 
 def load_acq():
-        config = load_config()
-        enable_raw_mode()
+    config = load_config()
+    enable_raw_mode()
 
-        try:
-            size = os.get_terminal_size()
-            visible_x = size.columns
-            visible_y = size.lines
-        except:
-            visible_x = 120
-            visible_y = 40
+    try:
+        size = os.get_terminal_size()
+        visible_x = size.columns
+        visible_y = size.lines
+    except:
+        visible_x = 120
+        visible_y = 40
 
-        world_y = visible_y
-        world_x = visible_x
+    world_y = visible_y
+    world_x = visible_x
 
-        renderer = Renderer(visible_y, visible_x)
+    renderer = Renderer(visible_y, visible_x)
 
         
-        static_layer = [[(" ", "", "") for _ in range(visible_x)] for _ in range(visible_y)]
-        static_objects = []
-        occupied = []
+    static_layer = [[(" ", "", "") for _ in range(visible_x)] for _ in range(visible_y)]
+    static_objects = []
+    occupied = []
 
     
-        for obj in config["static_objects"]:
-            shape = obj["shape"]
-            h = len(shape)
-            w = max(len(line) for line in shape)
-            count = obj.get("count", 1)
-            gap=0
+    for obj in config["static_objects"]:
+        shape = obj["shape"]
+        h = len(shape)
+        w = max(len(line) for line in shape)
+        count = obj.get("count", 1)
+        gap=0
 
-            for _ in range(count):
-                y = visible_y - obj["y_offset_from_bottom"] - h
-                if y < 0:
-                    y=0
+        for _ in range(count):
+            y = visible_y - obj["y_offset_from_bottom"] - h
+            if y < 0:
+                y=0
 
-                if obj.get("random_x", False):
-                    '''x = find_free_x_position(w, visible_x, occupied)'''
-                    x = find_free_x_position(
-                        w,
-                        visible_x,
-                        occupied,
-                        cluster=obj.get("cluster"),
-                        cluster_radius_pct=obj.get("cluster_radius_pct", 0.15),
-                        cluster_hard=obj.get("cluster_hard", False),
-                        gap=int(obj.get("cluster_gap", 0))
-                    )
-
-                else:
-                    x = obj.get("x", 0)
-                    if x + w > visible_x:
-                        x = max(0, visible_x - w)
-
-                occupied.append((x, x + w + gap))
-                occupied.sort()
-
-                if obj.get("specie") == "starfish":
-                    if obj["name"] == "starfishA":
-                        y = visible_y // 2 + int(random.uniform( visible_y / 8, visible_y / 4))
-                    elif obj["name"] == "starfishB":
-                        y = visible_y // 2 - int(random.uniform( visible_y / 3, visible_y / 2))
-
-                so = StaticObject(
-                    y, x, shape,
-                    rgb_fg=obj.get("rgb_fg"),
-                    rgb_bg=obj.get("rgb_bg")
+            if obj.get("random_x", False):
+                x = find_free_x_position(
+                    w,
+                    visible_x,
+                    occupied,
+                    cluster=obj.get("cluster"),
+                    cluster_radius_pct=obj.get("cluster_radius_pct", 0.15),
+                    cluster_hard=obj.get("cluster_hard", False),
+                    gap=int(obj.get("cluster_gap", 0))
                 )
-                static_objects.append(so)
-                so.draw_on_layer(static_layer)
+
+            else:
+                x = obj.get("x", 0)
+                if x + w > visible_x:
+                    x = max(0, visible_x - w)
+
+            occupied.append((x, x + w + gap))
+            occupied.sort()
+
+            if obj.get("specie") == "starfish":
+                if obj["name"] == "starfishA":
+                    y = visible_y // 2 + int(random.uniform( visible_y / 8, visible_y / 4))
+                elif obj["name"] == "starfishB":
+                    y = visible_y // 2 - int(random.uniform( visible_y / 3, visible_y / 2))
+
+            so = StaticObject(
+                y, x, shape,
+                rgb_fg=obj.get("rgb_fg"),
+                rgb_bg=obj.get("rgb_bg")
+            )
+            static_objects.append(so)
+            so.draw_on_layer(static_layer)
 
         
-        rgb_sand = config.get("rgb_sand", [194, 178, 128])
-        sand_chars = [",", ".", ":", "_", "-", "`", "~"]
+    rgb_sand = config.get("rgb_sand", [194, 178, 128])
+    sand_chars = [",", ".", ":", "_", "-", "`", "~"]
 
-        for y in range(max(0, visible_y - 2), visible_y):
-            for x in range(visible_x):
+    for y in range(max(0, visible_y - 2), visible_y):
+        for x in range(visible_x):
                 
-                if static_layer[y][x] == ("", "", "") or static_layer[y][x][0] == " ":
-                    ch = random.choice(sand_chars)
-                    fg_code = fg(*rgb_sand)
-                    static_layer[y][x] = (ch, fg_code, "")
+            if static_layer[y][x] == ("", "", "") or static_layer[y][x][0] == " ":
+                ch = random.choice(sand_chars)
+                fg_code = fg(*rgb_sand)
+                static_layer[y][x] = (ch, fg_code, "")
 
 
-        fish_list = []
-        for cfg in config["species"]:
-            initial_n = min(10, cfg.get("max_population", 10))
-            for _ in range(initial_n):
-                fish = Fish(world_y, world_x, cfg, visible_y)
-                fish.school_id = assign_school(fish, fish_list)
-                if fish.school_id not in school_directions:
-                    school_directions[fish.school_id] = random.choice([-1, 1])
+    fish_list = []
+    for cfg in config["species"]:
+        initial_n = min(10, cfg.get("max_population", 10))
+        for _ in range(initial_n):
+            fish = Fish(world_y, world_x, cfg, visible_y)
+            fish.school_id = assign_school(fish, fish_list)
+            if fish.school_id not in school_directions:
+                school_directions[fish.school_id] = random.choice([-1, 1])
 
-                fish_list.append(fish)
+            fish_list.append(fish)
 
                 
 
     
-        b_cfg = config["bubbles"]
+    b_cfg = config["bubbles"]
 
-        bubbles = [
-            Bubble(
-                world_y,
-                world_x,
-                visible_y,
-                rgb_fg=b_cfg.get("rgb_fg"),
-                rgb_bg=b_cfg.get("rgb_bg")
-            )
-            for _ in range(b_cfg["count"])
-        ]
+    bubbles = [
+        Bubble(
+            world_y,
+            world_x,
+            visible_y,
+            rgb_fg=b_cfg.get("rgb_fg"),
+            rgb_bg=b_cfg.get("rgb_bg")
+        )
+        for _ in range(b_cfg["count"])
+    ]
 
-        sys.stdout.write(CLEAR + move(1, 1) + HIDE_CURSOR)
-        sys.stdout.flush()
-        return config, static_layer, fish_list, bubbles,visible_y,visible_x,world_y,world_x
+    sys.stdout.write(CLEAR + move(1, 1) + HIDE_CURSOR)
+    sys.stdout.flush()
+    return config,renderer, static_layer, fish_list, bubbles,visible_y,visible_x,world_y,world_x
 
 def move(y, x):
     return f"\033[{y};{x}H"
@@ -695,113 +694,109 @@ def find_uniform_x(width, visible_x, occupied):
     return max(start, min(mid + jitter, end - width))
 
 
-'''def find_free_x_position(
+def find_free_x_position(
     width,
     visible_x,
     occupied,
     *,
     cluster=None,
-    cluster_radius_pct=0.06,
+    cluster_radius_pct=0.15,
     cluster_hard=False,
     gap=1
 ):
-    max_x = max(0, visible_x - width - gap)
-
-    # ---------- HARD CLUSTER ----------
-    if cluster and cluster_hard:
-        radius = max(1, int(visible_x * cluster_radius_pct))
-
-        if cluster not in cluster_centers:
-            min_center = radius
-            max_center = max(radius, max_x - radius)
-            center = random.randint(min_center, max_center)
-
-            left  = max(0, center - radius)
-            right = min(visible_x, center + radius)
-
-            cluster_centers[cluster] = (left, right)
-
-        left, right = cluster_centers[cluster]
-
-        for _ in range(100):
-            x = random.randint(left, max(left, right - width - gap))
-
-            # controllo SOLO X
-            if all(
-                x + width + gap <= ox1 or x >= ox2 + gap
-                for ox1, ox2 in occupied
-            ):
-                return x
-
-        # fallback: prendi un punto qualsiasi nello spazio del cluster
-        x = random.randint(left, max(left, right - width - gap))
-        return x
-
-    # ---------- UNIFORME ----------
-    return find_uniform_x(width, visible_x, occupied)
-
-'''
-
-def find_free_x_position(
-    width,
-    visible_x,        
-    occupied,
-    *,
-    cluster=None,
-    cluster_radius_pct=0.15,
-    cluster_hard=False,
-    gap=1,
-    max_tries=80
-):
     xmin = 0
     xmax = max(0, visible_x - width - gap)
-
     if xmax <= xmin:
         return xmin
 
-    # --- CLUSTER LOGIC ---
-    cluster_center = None
+    # ---------- CLUSTER CENTER STABILE ----------
+    if cluster:
+        if cluster not in cluster_centers:
+            margin = int(visible_x * 0.15)
+            if cluster == "houses":
+                cmin = margin
+                cmax = visible_x - margin
+            else:
+                cmin = 0
+                cmax = visible_x
 
-    if cluster and occupied:
-        centers = [(a + b) / 2 for a, b in occupied]
-        cluster_center = sum(centers) / len(centers)
+            cluster_centers[cluster] = random.randint(cmin, cmax)
 
+        cluster_center = cluster_centers[cluster]
         radius = int(visible_x * cluster_radius_pct)
-        cmin = max(xmin, int(cluster_center - radius))
-        cmax = min(xmax, int(cluster_center + radius))
     else:
-        cmin, cmax = xmin, xmax
+        cluster_center = visible_x / 2
+        radius = visible_x
 
-    # --- TENTATIVI ---
-    for _ in range(max_tries):
-        if cluster_center is not None and not cluster_hard:
-            x = random.randint(cmin, cmax)
-        else:
-            x = random.randint(xmin, xmax)
-
-        interval = (x - gap, x + width + gap)
-
-        if all(interval[1] <= a or interval[0] >= b for a, b in occupied):
-            return x
-
-    # --- FALLBACK INTELLIGENTE ---
+    # ---------- INTERVALLI LIBERI ----------
     occupied_sorted = sorted(occupied)
-    last_end = xmin
-    best_x = xmin
-    best_space = 0
+    free_intervals = []
 
+    last_end = xmin
     for a, b in occupied_sorted:
-        space = a - last_end
-        if space >= width + gap and space > best_space:
-            best_space = space
-            best_x = last_end + gap
+        if a - last_end >= width + gap:
+            free_intervals.append((last_end, a))
         last_end = max(last_end, b)
 
-    final_space = xmax - last_end
-    if final_space >= width + gap and final_space > best_space:
-        best_x = last_end + gap
+    if xmax - last_end >= width + gap:
+        free_intervals.append((last_end, xmax + gap))
 
-    return int(best_x)
+    if not free_intervals:
+        return random.randint(xmin, xmax)
+
+    # ---------- SCORE FUNCTION ----------
+    def score(x):
+        center_dist = abs((x + width / 2) - cluster_center)
+        cluster_score = max(0, radius - center_dist) / radius
+
+        separation = min(
+            abs(x - b) if x >= b else abs(a - (x + width))
+            for a, b in occupied_sorted
+        ) if occupied_sorted else visible_x
+
+        separation_score = min(separation / (width * 2), 1.0)
+
+        return (
+            cluster_score * 0.7 +
+            separation_score * 0.3
+        )
+
+    # ---------- GENERA CANDIDATI ----------
+    candidates = []
+
+    for start, end in free_intervals:
+        usable = end - start - width
+        if usable <= 0:
+            continue
+
+        # centro dello spazio
+        mid = start + usable / 2
+        candidates.append(mid)
+
+        # jitter laterale
+        candidates.append(mid + usable * 0.25)
+        candidates.append(mid - usable * 0.25)
+
+    # ---------- SELEZIONE MIGLIORE ----------
+    best_x = None
+    best_score = -1
+
+    for x in candidates:
+        x = int(max(xmin, min(x, xmax)))
+        interval = (x - gap, x + width + gap)
+
+        if all(interval[1] <= a or interval[0] >= b for a, b in occupied_sorted):
+            s = score(x)
+            if s > best_score:
+                best_score = s
+                best_x = x
+
+    if best_x is not None:
+        return best_x
+
+    # ---------- FALLBACK SOFT ----------
+    return int(max(xmin, min(cluster_center - width / 2, xmax)))
+
 
 def bubble_intro(renderer, static_layer, visible_y, visible_x,timesleep=0.05):
     bubbles = []
@@ -838,9 +833,9 @@ def sweep_bottom(renderer, static_layer, visible_y, visible_x):
                 
 
 def main():
-    config, static_layer, fish_list, bubbles,visible_y,visible_x,world_y,world_x = load_acq()
+    config,renderer, static_layer, fish_list, bubbles,visible_y,visible_x,world_y,world_x = load_acq()
     last_time = time.time() 
-    renderer=Renderer(visible_y, visible_x)  
+    #renderer=Renderer(visible_y, visible_x)  
     bubble_intro(renderer, static_layer, visible_y, visible_x,timesleep=0.0002)
 
     try:
@@ -854,8 +849,8 @@ def main():
                 if key == "q":
                     break
                 elif key == "r":
-                    config,static_layer, fish_list, bubbles,visible_y,visible_x,world_y,world_x = load_acq()
-                    renderer=Renderer(visible_y, visible_x)
+                    config,renderer,static_layer, fish_list, bubbles,visible_y,visible_x,world_y,world_x = load_acq()
+                    #renderer=Renderer(visible_y, visible_x)
                    
                     renderer.front = [[None for _ in range(visible_x)] for _ in range(visible_y)]  
                     bubble_intro(renderer, static_layer, visible_y, visible_x,timesleep=0.0002)
@@ -930,7 +925,7 @@ if __name__ == "__main__":
             os.system("")  
         else:
             #sys.stdout.write("\033[8;200;120t")
-            sys.stdout.write("\033[8;300;400")
+            sys.stdout.write("\033[8;300;400t")
             sys.stdout.flush()
     except Exception as e:
         print("Errore durante l'inizializzazione:", e)
